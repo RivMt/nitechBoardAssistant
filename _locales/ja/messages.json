@@ -1,0 +1,10 @@
+{
+  "extensionName": {
+    "message": "名工大学生掲示板アシスタント（非公式）",
+    "description": "Extension name"
+  },
+  "extensionDesc": {
+    "message": "名古屋工業大学の学生掲示板を見やすくします",
+    "description": "Extension description"
+  }
+}

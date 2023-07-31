@@ -1,0 +1,31 @@
+{
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDesc__",
+  "version": "1.0",
+  "manifest_version": 3,
+  "default_locale": "ja",
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://rpxkeijiban3.ict.nitech.ac.jp/*",
+    "http://rpxkeijiban3.ict.nitech.ac.jp/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://rpxkeijiban3.ict.nitech.ac.jp/*",
+        "http://rpxkeijiban3.ict.nitech.ac.jp/*"
+      ],
+      "js": [
+        "src/contentscript.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
