@@ -1,12 +1,23 @@
 const actionInsertCss = "actionInsertCss"
 
+const materialSymbols = "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+
 window.onload = async function() {
     const isDetail = document.URL.includes("detail")
+    includeMaterialSymbols()
     requestInsertCSS()
     setValign()
     setTableHeader()
     setHighlightColumn()
     removeLinkStyle()
+    setTopBar()
+}
+
+function includeMaterialSymbols() {
+    const material = document.createElement("link")
+    material.setAttribute("rel", "stylesheet")
+    material.setAttribute("href", materialSymbols)
+    document.querySelector("head").append(material)
 }
 
 function requestInsertCSS() {
@@ -63,4 +74,42 @@ function removeLinkStyle() {
     for(let i=0; i < links.length; i++) {
         links[i].removeAttribute("style")
     }
+}
+
+function setTopBar() {
+    const toolbar = document.querySelector("div")
+    toolbar.classList.add("nsb-toolbar")
+    toolbar.removeAttribute("style")
+    // Search bar
+    const searchBar = document.querySelectorAll("div")[1]
+    searchBar.classList.add("nsb-toolbar")
+    searchBar.classList.add("nsb-toolbar-right")
+    searchBar.removeAttribute("style")
+    searchBar.removeAttribute("align")
+    searchBar.innerHTML = searchBar.innerHTML.replace("検索キーワード", "")
+    const searchInputs = searchBar.querySelectorAll("input")
+    searchInputs[0].classList.add("inputfield")
+    searchInputs[0].removeAttribute("style")
+    searchInputs[1].innerHTML = ""
+    searchInputs[1].setAttribute("value", "search")
+    searchInputs[1].classList.add("material-symbols-outlined")
+    searchInputs[1].classList.add("icon-button")
+    searchInputs[1].removeAttribute("style")
+    searchInputs[2].setAttribute("style", "display:none;")
+}
+
+function toggleViewer() {
+    const viewer = document.querySelector(".nsb-viewer-background")
+    if (viewer.getAttribute("style") !== null) {
+        viewer.removeAttribute("style")
+    } else {
+        viewer.setAttribute("style", "display:none;")
+    }
+}
+
+function createMaterialSymbol(code) {
+    const symbol = document.createElement("span")
+    symbol.classList.add("material-symbols-outlined")
+    symbol.innerText = code
+    return symbol
 }
