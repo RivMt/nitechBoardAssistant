@@ -36,11 +36,11 @@ function setTableHeader() {
     const headers = head.querySelectorAll("a, span")
     for(let i=0; i < headers.length; i++) {
         headers[i].classList.add("nsb-header-title")
-        headers[i].removeAttribute("style")
     }
 }
 
 function setHighlightColumn() {
+    const onlyUnread = document.querySelector("div").querySelector("input").checked
     const columns = document.querySelectorAll("tr")
     for(let i=0; i < columns.length; i++) {
         const inputs = columns[i].querySelectorAll("input")
@@ -49,7 +49,7 @@ function setHighlightColumn() {
         }
         const read = inputs[0].checked
         const flag = inputs[3].checked
-        if (!read) {
+        if (!read && !onlyUnread) {
             columns[i].classList.add("nsb-unread")
         }
         if (flag) {
@@ -59,7 +59,7 @@ function setHighlightColumn() {
 }
 
 function removeLinkStyle() {
-    const links = document.querySelectorAll("a")
+    const links = document.querySelectorAll("a, td, span")
     for(let i=0; i < links.length; i++) {
         links[i].removeAttribute("style")
     }

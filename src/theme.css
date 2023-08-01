@@ -18,14 +18,13 @@
 }
 
 body {
-    font-size: 100%;
+    font-size: 1em;
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
     font-family: "Noto Sans CJK JP", "Noto Sans JP", "Meiryo UI", "Yu Gothic", sans-serif;
-    font-size: 1em;
     border: hidden;
     border-radius: 1em;
     box-shadow: 0 0 0 1px var(--border-color);
@@ -37,6 +36,7 @@ td, th {
     color: var(--content-color);
     vertical-align: center;
     border: 1px solid var(--border-color);
+    font-size: 0.9em;
 }
 
 .nsb-header {
@@ -47,6 +47,7 @@ td, th {
 
 tr.nsb-unread {
     font-weight: bold;
+    background-color: #efefef;
 }
 
 tr.nsb-flag {
@@ -61,7 +62,7 @@ table a {
 .nsb-header-title {
     color: var(--header-color);
     font-weight: bold;
-    font-size: 105%;
+    font-size: 1em;
 }
 
 /** Checkbox **/
