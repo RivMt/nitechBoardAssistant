@@ -6,11 +6,12 @@ window.onload = async function() {
     const isDetail = document.URL.includes("detail")
     includeMaterialSymbols()
     requestInsertCSS()
-    setValign()
+    removeTableCellStyle()
     setTableHeader()
     setHighlightColumn()
     removeLinkStyle()
-    setTopBar()
+    setToolbar()
+    setSearchBar()
 }
 
 function includeMaterialSymbols() {
@@ -33,7 +34,7 @@ function requestInsertCSS() {
     )
 }
 
-function setValign() {
+function removeTableCellStyle() {
     const tds = document.querySelectorAll("td")
     for(let i=0; i < tds.length; i++) {
         tds[i].removeAttribute("valign")
@@ -43,6 +44,9 @@ function setValign() {
 
 function setTableHeader() {
     const head = document.querySelector("tr")
+    if (head === null) {
+        return
+    }
     head.classList.add("nsb-header")
     const headers = head.querySelectorAll("a, span")
     for(let i=0; i < headers.length; i++) {
@@ -76,11 +80,13 @@ function removeLinkStyle() {
     }
 }
 
-function setTopBar() {
+function setToolbar() {
     const toolbar = document.querySelector("div")
     toolbar.classList.add("nsb-toolbar")
     toolbar.removeAttribute("style")
-    // Search bar
+}
+
+function setSearchBar() {
     const searchBar = document.querySelectorAll("div")[1]
     searchBar.classList.add("nsb-toolbar")
     searchBar.classList.add("nsb-toolbar-right")
