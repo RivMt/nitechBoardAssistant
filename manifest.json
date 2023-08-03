@@ -31,7 +31,7 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "src/article.js",
+        "src/override.js",
         "src/theme.css"
       ],
       "matches": [

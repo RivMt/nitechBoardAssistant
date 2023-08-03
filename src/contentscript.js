@@ -8,7 +8,7 @@ window.onload = async function() {
     const isDetail = document.URL.includes("detail")
     includeMaterialSymbols()
     insertCSS()
-    insertScript(document, "src/article.js")
+    insertScript(document, "src/override.js")
     removeTableStyle(document)
     setTableHeader(document)
     setHighlightColumn()
@@ -153,20 +153,26 @@ function createViewer() {
     viewerClose.classList.add("nsb-viewer-toolbar-close")
     viewerClose.classList.add("icon-button")
     viewerClose.append(createMaterialSymbol("close"))
-    viewerClose.onclick = () => {
-        setIframeSrc("")
-        const form = document.querySelector("form")
-        form.submit()
-    }
+    viewerClose.onclick = closeIframe
     const viewerPrint = document.createElement("button")
     viewerPrint.classList.add("icon-button")
     viewerPrint.append(createMaterialSymbol("print"))
+    viewerPrint.onclick = printIframe
+    const viewerCopy = document.createElement("button")
+    viewerCopy.classList.add("icon-button")
+    viewerCopy.append(createMaterialSymbol("content_copy"))
+    const viewerUrl = document.createElement("button")
+    viewerUrl.classList.add("icon-button")
+    viewerUrl.append(createMaterialSymbol("link"))
     const viewerFlag = document.createElement("button")
     viewerFlag.classList.add("icon-button")
     viewerFlag.append(createMaterialSymbol("star"))
+    viewerFlag.onclick = flagIframe
     const viewerAction = document.createElement("div")
     viewerAction.classList.add("nsb-viewer-toolbar-action")
     viewerAction.append(viewerPrint)
+    viewerAction.append(viewerCopy)
+    viewerAction.append(viewerUrl)
     viewerAction.append(viewerFlag)
     const viewerToolbar = document.createElement("div")
     viewerToolbar.classList.add("nsb-viewer-toolbar")
@@ -188,8 +194,12 @@ function createViewer() {
     body.append(viewerBackground)
 }
 
+function getIframe() {
+    return document.querySelector("iframe#nsb-viewer-content")
+}
+
 function setIframeSrc(uri) {
-    const iframe = document.querySelector("iframe#nsb-viewer-content")
+    const iframe = getIframe()
     if (iframe === null) {
         return
     }
@@ -201,7 +211,7 @@ async function onIframeLoad() {
     if (viewer === null) {
         return
     }
-    const iframe = viewer.querySelector("iframe")
+    const iframe = getIframe()
     if (iframe === null) {
         return
     }
@@ -212,12 +222,38 @@ async function onIframeLoad() {
         css.setAttribute("rel", "stylesheet")
         css.setAttribute("href", chrome.runtime.getURL("src/theme.css"))
         iframe.contentWindow.document.head.append(css)
+        insertScript(iframe.contentWindow.document, "src/override.js")
         removeTableStyle(iframe.contentWindow.document)
         setTableHeader(iframe.contentWindow.document)
     } else {
         // Hide
         viewer.setAttribute("style", "display:none;")
     }
+}
+
+function closeIframe() {
+    setIframeSrc("")
+    const form = document.querySelector("form")
+    form.submit()
+}
+
+function printIframe() {
+    const iframe = getIframe()
+    if (iframe === null) {
+        return
+    }
+    iframe.contentWindow.print()
+}
+
+function flagIframe() {
+    const iframe = getIframe()
+    if (iframe === null) {
+        return
+    }
+    const toolbar = iframe.contentWindow.document.querySelector("#print_display")
+    const flag = toolbar.querySelectorAll("input")[3]
+    flag.click()
+    setTimeout(closeIframe, 100)
 }
 
 function createMaterialSymbol(code) {
