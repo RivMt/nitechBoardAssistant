@@ -13,14 +13,11 @@ window.onload = async function() {
     setTableHeader(document)
     setHighlightColumn()
     removeLinkStyle()
-    if (isDetail) {
-        setDetailsToolbar()
-    } else {
-        setToolbar()
-        setSearchBar()
-        setSearchResult()
-        createViewer()
-    }
+    setToolbar()
+    setSearchBar()
+    setSearchResult()
+    createViewer()
+    createToast()
 }
 
 function includeMaterialSymbols() {
@@ -133,21 +130,6 @@ function setSearchResult() {
     result.classList.add("nsb-search-result")
 }
 
-function setDetailsToolbar() {
-    const toolbar = document.querySelector("#print_display")
-    if (toolbar === null) {
-        return
-    }
-    const inputs = toolbar.querySelectorAll("input")
-    const names = ["print", "save", "close", "star"]
-    for(let i=0; i < names.length; i++) {
-        inputs[i].classList.add("icon-button")
-        inputs[i].classList.add(classMaterialSymbols)
-        inputs[i].setAttribute("value", names[i])
-        inputs[i].removeAttribute("style")
-    }
-}
-
 function createViewer() {
     const viewerClose = document.createElement("button")
     viewerClose.classList.add("nsb-viewer-toolbar-close")
@@ -161,6 +143,7 @@ function createViewer() {
     const viewerCopy = document.createElement("button")
     viewerCopy.classList.add("icon-button")
     viewerCopy.append(createMaterialSymbol("content_copy"))
+    viewerCopy.onclick = copyIframeContent
     const viewerUrl = document.createElement("button")
     viewerUrl.classList.add("icon-button")
     viewerUrl.append(createMaterialSymbol("link"))
@@ -206,6 +189,23 @@ function setIframeSrc(uri) {
     iframe.setAttribute("src", uri)
 }
 
+function setIframeArticleStyle() {
+    const iframe = getIframe()
+    if (iframe === null) {
+        return
+    }
+    const table = iframe.contentWindow.document.querySelector("table")
+    if (table === null) {
+        return
+    }
+    table.setAttribute("id", "nsb-viewer-content-table")
+    const article = iframe.contentWindow.document.querySelectorAll("tr")[4]
+    if (article === null) {
+        return
+    }
+    article.classList.add("nsb-viewer-content-article")
+}
+
 async function onIframeLoad() {
     const viewer = document.querySelector(".nsb-viewer-background")
     if (viewer === null) {
@@ -225,6 +225,7 @@ async function onIframeLoad() {
         insertScript(iframe.contentWindow.document, "src/override.js")
         removeTableStyle(iframe.contentWindow.document)
         setTableHeader(iframe.contentWindow.document)
+        setIframeArticleStyle()
     } else {
         // Hide
         viewer.setAttribute("style", "display:none;")
@@ -256,9 +257,38 @@ function flagIframe() {
     setTimeout(closeIframe, 100)
 }
 
+function copyIframeContent() {
+    const iframe = getIframe()
+    if (iframe === null) {
+        return
+    }
+    const content = iframe.contentWindow.document.querySelector(".nsb-viewer-content-article")
+    if (content === null) {
+        return
+    }
+    window.navigator.clipboard.writeText(content.innerText).then(r => console.error(`Failed to copy ${content.innerText}`))
+    showToast("Content copied")
+}
+
 function createMaterialSymbol(code) {
     const symbol = document.createElement("span")
     symbol.classList.add(classMaterialSymbols)
     symbol.innerText = code
     return symbol
+}
+
+function createToast() {
+    const toast = document.createElement("div")
+    toast.setAttribute("id", "nsb-toast")
+    toast.setAttribute("style", "display: none;")
+    document.body.append(toast)
+}
+
+function showToast(message) {
+    const toast = document.getElementById("nsb-toast")
+    toast.innerText = message
+    toast.removeAttribute("style")
+    setTimeout(() => {
+        toast.setAttribute("style", "display: none;")
+    }, 3000)
 }

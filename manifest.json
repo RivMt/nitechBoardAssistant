@@ -10,7 +10,8 @@
   "permissions": [
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "clipboardWrite"
   ],
   "host_permissions": [
     "https://rpxkeijiban3.ict.nitech.ac.jp/*",
