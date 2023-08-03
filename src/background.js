@@ -15,7 +15,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 })
 
 function insertCss(tabId) {
-    const css = ["src/theme.css"]
+    const css = [
+        "src/nsb-core.css",
+        "src/nsb-main.css"
+    ]
     chrome.scripting.insertCSS({
         files: css,
         target: {

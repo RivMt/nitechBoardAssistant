@@ -24,7 +24,9 @@
         "http://rpxkeijiban3.ict.nitech.ac.jp/*"
       ],
       "js": [
-        "src/contentscript.js"
+        "src/content_core.js",
+        "src/content_main.js",
+        "src/content_article.js"
       ],
       "run_at": "document_start"
     }
@@ -33,7 +35,8 @@
     {
       "resources": [
         "src/override.js",
-        "src/theme.css"
+        "src/nsb-core.css",
+        "src/nsb-article.css"
       ],
       "matches": [
         "https://rpxkeijiban3.ict.nitech.ac.jp/*",

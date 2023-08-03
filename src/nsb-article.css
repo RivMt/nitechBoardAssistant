@@ -1,0 +1,21 @@
+/* Hide Article toolbar */
+div#print_display {
+    display: none;
+}
+
+/* Content */
+table#nsb-viewer-content-table {
+    table-layout: fixed;
+    width: 100%;
+    word-wrap: break-word;
+}
+tr.nsb-viewer-content-article {
+    height: auto;
+    margin-bottom: 0;
+}
+
+/* Flagged IconButton */
+.icon-button.nsb-flag {
+    color: var(--special-color);
+    font-weight: bolder;
+}
