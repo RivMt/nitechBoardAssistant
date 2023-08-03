@@ -144,6 +144,45 @@ function toggleViewer() {
     }
 }
 
+async function createViewer() {
+    const viewerClose = document.createElement("button")
+    viewerClose.classList.add("nsb-viewer-toolbar-close")
+    viewerClose.classList.add("icon-button")
+    viewerClose.append(createMaterialSymbol("close"))
+    viewerClose.onclick = location.reload
+    const viewerPrint = document.createElement("button")
+    viewerPrint.classList.add("icon-button")
+    viewerPrint.append(createMaterialSymbol("print"))
+    const viewerFlag = document.createElement("button")
+    viewerFlag.classList.add("icon-button")
+    viewerFlag.append(createMaterialSymbol("star"))
+    const viewerAction = document.createElement("div")
+    viewerAction.classList.add("nsb-viewer-toolbar-action")
+    viewerAction.append(viewerPrint)
+    viewerAction.append(viewerFlag)
+    const viewerToolbar = document.createElement("div")
+    viewerToolbar.classList.add("nsb-viewer-toolbar")
+    viewerToolbar.append(viewerClose)
+    viewerToolbar.append(viewerAction)
+    const viewerContent = document.createElement("iframe")
+    viewerContent.classList.add("nsb-viewer-content")
+    const viewer = document.createElement("div")
+    viewer.classList.add("nsb-viewer")
+    viewer.append(viewerToolbar)
+    viewer.append(viewerContent)
+    const viewerBackground = document.createElement("div")
+    viewerBackground.classList.add("nsb-viewer-background")
+    viewerBackground.append(viewer)
+    const body = document.querySelector("body")
+    body.append(viewerBackground)
+    const article = await getArticleUri()
+    if (article !== null) {
+        openArticle(article)
+    } else {
+        toggleViewer()
+    }
+}
+
 function createMaterialSymbol(code) {
     const symbol = document.createElement("span")
     symbol.classList.add(classMaterialSymbols)
