@@ -4,8 +4,11 @@
     "description": "Extension name"
   },
   "extensionDesc": {
-    "message": "名古屋工業大学の学生掲示板を見やすくします",
+    "message": "名工大学生掲示板がもっと便利に！",
     "description": "Extension description"
+  },
+  "messageLegalNotice": {
+    "message": "この拡張機能は名古屋工業大学が制作・配布するものではありません。"
   },
   "messageContentCopied": {
     "message": "内容がコピーされました。",

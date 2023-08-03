@@ -3,13 +3,13 @@ body {
 }
 
 header {
-    background: hsl(var(--primary-color-hs), var(--color-base));
+    color: hsl(var(--primary-color-hs), var(--color-base));
     margin: 0;
     padding: 4px 0.5em;
-    color: white;
+    text-align: center;
 }
 
-header > p {
+header > p.version {
     text-align: right;
 }
 
@@ -22,6 +22,12 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.notice {
+    color: var(--header-color);
+    text-align: center;
+    font-size: 0.8em;
 }
 
 .iconButton {
@@ -49,4 +55,11 @@ a.iconButton:active {
     height: 24px;
     display: block;
     margin: 4px;
+}
+
+.appIcon {
+    width: 64px;
+    height: 64px;
+    display: block;
+    margin: auto;
 }
