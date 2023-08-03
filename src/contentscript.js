@@ -2,6 +2,8 @@ const actionInsertCss = "actionInsertCss"
 
 const materialSymbols = "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
 
+const classMaterialSymbols = "material-symbols-outlined"
+
 window.onload = async function() {
     const isDetail = document.URL.includes("detail")
     includeMaterialSymbols()
@@ -10,8 +12,13 @@ window.onload = async function() {
     setTableHeader()
     setHighlightColumn()
     removeLinkStyle()
-    setToolbar()
-    setSearchBar()
+    if (isDetail) {
+        setDetailsToolbar()
+    } else {
+        setToolbar()
+        setSearchBar()
+        setSearchResult()
+    }
 }
 
 function includeMaterialSymbols() {
@@ -104,6 +111,30 @@ function setSearchBar() {
     searchInputs[2].setAttribute("style", "display:none;")
 }
 
+function setSearchResult() {
+    const divs = document.querySelectorAll("div")
+    if (divs.length < 3) {
+        return
+    }
+    const result = divs[2]
+    result.classList.add("nsb-search-result")
+}
+
+function setDetailsToolbar() {
+    const toolbar = document.querySelector("#print_display")
+    if (toolbar === null) {
+        return
+    }
+    const inputs = toolbar.querySelectorAll("input")
+    const names = ["print", "save", "close", "star"]
+    for(let i=0; i < names.length; i++) {
+        inputs[i].classList.add("icon-button")
+        inputs[i].classList.add(classMaterialSymbols)
+        inputs[i].setAttribute("value", names[i])
+        inputs[i].removeAttribute("style")
+    }
+}
+
 function toggleViewer() {
     const viewer = document.querySelector(".nsb-viewer-background")
     if (viewer.getAttribute("style") !== null) {
@@ -115,7 +146,7 @@ function toggleViewer() {
 
 function createMaterialSymbol(code) {
     const symbol = document.createElement("span")
-    symbol.classList.add("material-symbols-outlined")
+    symbol.classList.add(classMaterialSymbols)
     symbol.innerText = code
     return symbol
 }

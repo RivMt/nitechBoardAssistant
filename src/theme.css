@@ -79,6 +79,19 @@ div.nsb-toolbar-right {
     display: flex;
 }
 
+/* Search result */
+div.nsb-search-result {
+    margin: auto;
+    text-align: center;
+}
+
+/* Details toolbar */
+div#print_display {
+    display: inline-block;
+    width: auto;
+    height: 40px;
+}
+
 /** Viewer **/
 div.nsb-viewer-background {
     width: 100%;
