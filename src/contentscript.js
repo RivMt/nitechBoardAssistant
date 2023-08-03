@@ -113,6 +113,7 @@ function setSearchBar() {
     const searchInputs = searchBar.querySelectorAll("input")
     searchInputs[0].classList.add("inputfield")
     searchInputs[0].removeAttribute("style")
+    searchInputs[0].setAttribute("placeholder", chrome.i18n.getMessage("placeholderSearchBar"))
     searchInputs[1].innerHTML = ""
     searchInputs[1].setAttribute("value", "search")
     searchInputs[1].classList.add("material-symbols-outlined")
@@ -294,7 +295,8 @@ function copyIframeContent() {
         return
     }
     window.navigator.clipboard.writeText(content.innerText).then(r => console.error(`Failed to copy content`))
-    showToast("Content copied")
+    const message = chrome.i18n.getMessage("messageContentCopied")
+    showToast(message)
 }
 
 function copyIframeSrc() {
@@ -303,7 +305,8 @@ function copyIframeSrc() {
         return
     }
     window.navigator.clipboard.writeText(iframe.src).then(r => console.error(`Failed to copy URL`))
-    showToast("Content copied")
+    const message = chrome.i18n.getMessage("messageUrlCopied")
+    showToast(message)
 }
 
 function createMaterialSymbol(code) {

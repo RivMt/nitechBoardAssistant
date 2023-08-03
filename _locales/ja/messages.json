@@ -6,5 +6,17 @@
   "extensionDesc": {
     "message": "名古屋工業大学の学生掲示板を見やすくします",
     "description": "Extension description"
+  },
+  "messageContentCopied": {
+    "message": "内容がコピーされました。",
+    "description": "Message displays on user copied article content"
+  },
+  "messageUrlCopied": {
+    "message": "URLがコピーされました。",
+    "description": "Message displays on user copied article URL"
+  },
+  "placeholderSearchBar": {
+    "message": "検索",
+    "description": "Placeholder for search bar"
   }
 }
