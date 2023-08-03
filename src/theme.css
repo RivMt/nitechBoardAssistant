@@ -87,9 +87,7 @@ div.nsb-search-result {
 
 /* Details toolbar */
 div#print_display {
-    display: inline-block;
-    width: auto;
-    height: 40px;
+    display: none;
 }
 
 /** Viewer **/
@@ -294,4 +292,8 @@ input[type="radio"]:disabled+span {
 .icon-button:hover {
     border-radius: 50%;
     background-color: rgba(200, 200, 200, var(--transparent-light));
+}
+.icon-button.nsb-flag {
+    color: var(--special-color);
+    font-weight: bolder;
 }

@@ -147,6 +147,7 @@ function createViewer() {
     const viewerUrl = document.createElement("button")
     viewerUrl.classList.add("icon-button")
     viewerUrl.append(createMaterialSymbol("link"))
+    viewerUrl.onclick = copyIframeSrc
     const viewerFlag = document.createElement("button")
     viewerFlag.classList.add("icon-button")
     viewerFlag.append(createMaterialSymbol("star"))
@@ -206,6 +207,27 @@ function setIframeArticleStyle() {
     article.classList.add("nsb-viewer-content-article")
 }
 
+function setIframeArticleFlagButton() {
+    const iframe = getIframe()
+    if (iframe === null) {
+        return
+    }
+    const inputs = iframe.contentWindow.document.querySelectorAll("input")
+    if (inputs.length < 7) {
+        return
+    }
+    const flag = inputs[6].value.includes("非")
+    const buttons = document.querySelectorAll("button")
+    if (buttons.length < 5) {
+        return
+    }
+    if (flag) {
+        buttons[4].classList.add("nsb-flag")
+    } else {
+        buttons[4].classList.remove("nsb-flag")
+    }
+}
+
 async function onIframeLoad() {
     const viewer = document.querySelector(".nsb-viewer-background")
     if (viewer === null) {
@@ -226,9 +248,14 @@ async function onIframeLoad() {
         removeTableStyle(iframe.contentWindow.document)
         setTableHeader(iframe.contentWindow.document)
         setIframeArticleStyle()
+        setIframeArticleFlagButton()
+        // Set title
+        const title = iframe.contentWindow.document.getElementById("nsb-viewer-content-table").querySelectorAll("td")[1].innerText
+        iframe.setAttribute("title", title)
     } else {
         // Hide
         viewer.setAttribute("style", "display:none;")
+        viewer.setAttribute("title", "")
     }
 }
 
@@ -266,7 +293,16 @@ function copyIframeContent() {
     if (content === null) {
         return
     }
-    window.navigator.clipboard.writeText(content.innerText).then(r => console.error(`Failed to copy ${content.innerText}`))
+    window.navigator.clipboard.writeText(content.innerText).then(r => console.error(`Failed to copy content`))
+    showToast("Content copied")
+}
+
+function copyIframeSrc() {
+    const iframe = getIframe()
+    if (iframe === null) {
+        return
+    }
+    window.navigator.clipboard.writeText(iframe.src).then(r => console.error(`Failed to copy URL`))
     showToast("Content copied")
 }
 
