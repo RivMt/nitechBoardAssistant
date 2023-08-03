@@ -7,9 +7,10 @@ const classMaterialSymbols = "material-symbols-outlined"
 window.onload = async function() {
     const isDetail = document.URL.includes("detail")
     includeMaterialSymbols()
-    requestInsertCSS()
-    removeTableCellStyle()
-    setTableHeader()
+    insertCSS()
+    insertScript(document, "src/article.js")
+    removeTableStyle(document)
+    setTableHeader(document)
     setHighlightColumn()
     removeLinkStyle()
     if (isDetail) {
@@ -18,6 +19,7 @@ window.onload = async function() {
         setToolbar()
         setSearchBar()
         setSearchResult()
+        createViewer()
     }
 }
 
@@ -28,7 +30,7 @@ function includeMaterialSymbols() {
     document.querySelector("head").append(material)
 }
 
-function requestInsertCSS() {
+function insertCSS() {
     chrome.runtime.sendMessage(
         {
             "data": actionInsertCss
@@ -41,15 +43,26 @@ function requestInsertCSS() {
     )
 }
 
-function removeTableCellStyle() {
+function insertScript(document, file) {
+    const script = document.createElement("script")
+    script.src = chrome.runtime.getURL(file)
+    document.head.append(script)
+}
+
+function removeTableStyle(document) {
+    const table = document.querySelector("table")
+    if (table !== null) {
+        table.removeAttribute("style")
+    }
     const tds = document.querySelectorAll("td")
     for(let i=0; i < tds.length; i++) {
         tds[i].removeAttribute("valign")
         tds[i].removeAttribute("bgcolor")
+        tds[i].removeAttribute("style")
     }
 }
 
-function setTableHeader() {
+function setTableHeader(document) {
     const head = document.querySelector("tr")
     if (head === null) {
         return
@@ -135,21 +148,16 @@ function setDetailsToolbar() {
     }
 }
 
-function toggleViewer() {
-    const viewer = document.querySelector(".nsb-viewer-background")
-    if (viewer.getAttribute("style") !== null) {
-        viewer.removeAttribute("style")
-    } else {
-        viewer.setAttribute("style", "display:none;")
-    }
-}
-
-async function createViewer() {
+function createViewer() {
     const viewerClose = document.createElement("button")
     viewerClose.classList.add("nsb-viewer-toolbar-close")
     viewerClose.classList.add("icon-button")
     viewerClose.append(createMaterialSymbol("close"))
-    viewerClose.onclick = location.reload
+    viewerClose.onclick = () => {
+        setIframeSrc("")
+        const form = document.querySelector("form")
+        form.submit()
+    }
     const viewerPrint = document.createElement("button")
     viewerPrint.classList.add("icon-button")
     viewerPrint.append(createMaterialSymbol("print"))
@@ -166,6 +174,9 @@ async function createViewer() {
     viewerToolbar.append(viewerAction)
     const viewerContent = document.createElement("iframe")
     viewerContent.classList.add("nsb-viewer-content")
+    viewerContent.onload = onIframeLoad
+    viewerContent.setAttribute("name", "nsb-viewer-content")
+    viewerContent.setAttribute("id", "nsb-viewer-content")
     const viewer = document.createElement("div")
     viewer.classList.add("nsb-viewer")
     viewer.append(viewerToolbar)
@@ -175,11 +186,37 @@ async function createViewer() {
     viewerBackground.append(viewer)
     const body = document.querySelector("body")
     body.append(viewerBackground)
-    const article = await getArticleUri()
-    if (article !== null) {
-        openArticle(article)
+}
+
+function setIframeSrc(uri) {
+    const iframe = document.querySelector("iframe#nsb-viewer-content")
+    if (iframe === null) {
+        return
+    }
+    iframe.setAttribute("src", uri)
+}
+
+async function onIframeLoad() {
+    const viewer = document.querySelector(".nsb-viewer-background")
+    if (viewer === null) {
+        return
+    }
+    const iframe = viewer.querySelector("iframe")
+    if (iframe === null) {
+        return
+    }
+    const uri = iframe.getAttribute("src")
+    if (uri !== null && uri !== "") {
+        viewer.removeAttribute("style")
+        const css = iframe.contentWindow.document.createElement("link")
+        css.setAttribute("rel", "stylesheet")
+        css.setAttribute("href", chrome.runtime.getURL("src/theme.css"))
+        iframe.contentWindow.document.head.append(css)
+        removeTableStyle(iframe.contentWindow.document)
+        setTableHeader(iframe.contentWindow.document)
     } else {
-        toggleViewer()
+        // Hide
+        viewer.setAttribute("style", "display:none;")
     }
 }
 

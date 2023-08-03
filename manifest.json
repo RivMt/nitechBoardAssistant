@@ -27,5 +27,17 @@
       ],
       "run_at": "document_start"
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/article.js",
+        "src/theme.css"
+      ],
+      "matches": [
+        "https://rpxkeijiban3.ict.nitech.ac.jp/*",
+        "http://rpxkeijiban3.ict.nitech.ac.jp/*"
+      ]
+    }
   ]
 }
