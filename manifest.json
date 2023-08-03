@@ -13,6 +13,9 @@
     "scripting",
     "clipboardWrite"
   ],
+  "action": {
+    "default_popup": "src/pages/popup.html"
+  },
   "host_permissions": [
     "https://rpxkeijiban3.ict.nitech.ac.jp/*",
     "http://rpxkeijiban3.ict.nitech.ac.jp/*"

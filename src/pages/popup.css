@@ -1,0 +1,52 @@
+body {
+    min-width: 300px;
+}
+
+header {
+    background: hsl(var(--primary-color-hs), var(--color-base));
+    margin: 0;
+    padding: 4px 0.5em;
+    color: white;
+}
+
+header > p {
+    text-align: right;
+}
+
+h1 {
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.iconButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+a.iconButton:link {
+    color: dimgray;
+}
+a.iconButton:visited {
+    color: dimgray;
+}
+a.iconButton:hover {
+    color: #059be6;
+    background: #dddddd;
+}
+a.iconButton:active {
+    color: white;
+    background-color: #dddddd;
+}
+
+.svgIcon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: 4px;
+}
