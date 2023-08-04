@@ -23,6 +23,3 @@ function f_open(width, height, target, next, option) {
     iframe.setAttribute("src", uri)
     return window
 }
-
-/// Override `resCheckRead` in article webpage
-function resCheckRead() {}

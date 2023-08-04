@@ -4,7 +4,7 @@ window.onload = async function() {
     const isDetail = document.URL.includes("detail")
     includeMaterialSymbols()
     insertCSS()
-    insertScript(document, "src/override.js")
+    insertScript(document, "src/override-main.js")
     removeTableStyle(document)
     setTableHeader(document)
     setHighlightColumn()

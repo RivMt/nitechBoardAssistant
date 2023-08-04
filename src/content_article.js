@@ -70,7 +70,7 @@ async function onIframeLoad() {
         cssArticle.setAttribute("rel", "stylesheet")
         cssArticle.setAttribute("href", chrome.runtime.getURL("src/nsb-article.css"))
         iframe.contentWindow.document.head.append(cssArticle)
-        insertScript(iframe.contentWindow.document, "src/override.js")
+        insertScript(iframe.contentWindow.document, "src/override-article.js")
         removeTableStyle(iframe.contentWindow.document)
         setTableHeader(iframe.contentWindow.document)
         setIframeArticleStyle()

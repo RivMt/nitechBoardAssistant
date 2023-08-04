@@ -44,7 +44,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "src/override.js",
+        "src/override-main.js",
+        "src/override-article.js",
         "src/nsb-core.css",
         "src/nsb-article.css"
       ],
