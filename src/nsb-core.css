@@ -14,13 +14,34 @@
     --header-color: #333;
     --content-color: #222;
     --border-color: #ddd;
-    --background-color: #eee;
+    --header-background-color: #eee;
+    --unread-background-color: #efefef;
+    --background-color: white;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color-hs: 24, 85%;
+        --color-lighter: 10%;
+        --color-light: 30%;
+        --color-base: 50%;
+        --color-dark: 50%;
+        --color-darker: 70%;
+        --special-color: #159b45;
+        --header-color: #ccc;
+        --content-color: #ddd;
+        --border-color: #333;
+        --header-background-color: #222;
+        --unread-background-color: #2f2f2f;
+        --background-color: #111;
+    }
 }
 
 body {
-     font-size: 1em;
-     font-family: "Noto Sans CJK JP", "Noto Sans JP", "Meiryo UI", "Yu Gothic", sans-serif;
-     color: var(--content-color);
+    font-size: 1em;
+    font-family: "Noto Sans CJK JP", "Noto Sans JP", "Meiryo UI", "Yu Gothic", sans-serif;
+    color: var(--content-color);
+    background-color: var(--background-color);
 }
 
 /* Table */
@@ -44,7 +65,7 @@ td, th {
 .nsb-header {
     text-align: center;
     border-radius: 1em 1em 0 0;
-    background-color: var(--background-color);
+    background-color: var(--header-background-color);
 }
 
 .nsb-header-title {
@@ -191,7 +212,8 @@ input[type="radio"]:disabled+span {
     width: auto;
     padding: 0.7em 0.5em;
     border: none;
-    background-color: var(--background-color);
+    color: var(--content-color);
+    background-color: var(--header-background-color);
     font-size: 1em;
 }
 

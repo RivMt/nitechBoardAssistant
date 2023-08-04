@@ -1,7 +1,7 @@
 /* Table */
 tr.nsb-unread {
     font-weight: bold;
-    background-color: #efefef;
+    background-color: var(--unread-background-color);
 }
 
 tr.nsb-flag {
@@ -17,7 +17,7 @@ div.nsb-toolbar {
 div.nsb-toolbar-right {
     width: auto;
     float: right;
-    background-color: var(--background-color);
+    background-color: var(--header-background-color);
     border-radius: var(--component-border-radius);
     padding: 0.5em;
     vertical-align: middle;
@@ -49,7 +49,7 @@ div.nsb-viewer {
     flex-direction: column;
     align-items: stretch;
     justify-content: stretch;
-    background-color: white;
+    background-color: var(--background-color);
     padding: 1em;
     border-radius: var(--component-border-radius);
     box-shadow: 0 2px var(--component-border-radius) 2px #555;
