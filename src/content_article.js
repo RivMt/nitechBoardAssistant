@@ -85,13 +85,21 @@ async function onIframeLoad() {
     }
 }
 
-function closeIframe() {
+function closeIframe(isDetail) {
+    if (isDetail) {
+        window.close()
+        return
+    }
     setIframeSrc("")
     const form = document.querySelector("form")
     form.submit()
 }
 
-function printIframe() {
+function printIframe(isDetail) {
+    if (isDetail) {
+        window.print()
+        return
+    }
     const iframe = getIframe()
     if (iframe === null) {
         return
@@ -99,37 +107,56 @@ function printIframe() {
     iframe.contentWindow.print()
 }
 
-function flagIframe() {
-    const iframe = getIframe()
-    if (iframe === null) {
-        return
+function flagIframe(isDetail) {
+    let w = window
+    if (!isDetail) {
+        const iframe = getIframe()
+        if (iframe === null) {
+            return
+        }
+        w = iframe.contentWindow
     }
-    const toolbar = iframe.contentWindow.document.querySelector("#print_display")
+    const toolbar = w.document.querySelector("#print_display")
     const flag = toolbar.querySelectorAll("input")[3]
     flag.click()
     setTimeout(closeIframe, 100)
 }
 
-function copyIframeContent() {
-    const iframe = getIframe()
-    if (iframe === null) {
-        return
-    }
-    const content = iframe.contentWindow.document.querySelector(".nsb-viewer-content-article")
-    if (content === null) {
-        return
+function copyIframeContent(isDetail) {
+    let content = null
+    if (isDetail) {
+        const trs = document.querySelectorAll("tr")
+        if (trs.length < 5) {
+            return
+        }
+        content = trs[4]
+    } else {
+        const iframe = getIframe()
+        if (iframe === null) {
+            return
+        }
+        content = iframe.contentWindow.document.querySelector(".nsb-viewer-content-article")
+        if (content === null) {
+            return
+        }
     }
     window.navigator.clipboard.writeText(content.innerText).then(r => console.error(`Failed to copy content`))
     const message = chrome.i18n.getMessage("messageContentCopied")
     showToast(message)
 }
 
-function copyIframeSrc() {
-    const iframe = getIframe()
-    if (iframe === null) {
-        return
+function copyIframeSrc(isDetail) {
+    let uri = ""
+    if (isDetail) {
+        uri = window.location
+    } else {
+        const iframe = getIframe()
+        if (iframe === null) {
+            return
+        }
+        uri = iframe.src
     }
-    window.navigator.clipboard.writeText(iframe.src).then(r => console.error(`Failed to copy URL`))
+    window.navigator.clipboard.writeText(uri).then(r => console.error(`Failed to copy URL`))
     const message = chrome.i18n.getMessage("messageUrlCopied")
     showToast(message)
 }

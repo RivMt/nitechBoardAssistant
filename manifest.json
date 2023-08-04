@@ -36,7 +36,8 @@
       "js": [
         "src/content_core.js",
         "src/content_main.js",
-        "src/content_article.js"
+        "src/content_article.js",
+        "src/settings.js"
       ],
       "run_at": "document_start"
     }

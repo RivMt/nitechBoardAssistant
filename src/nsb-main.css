@@ -54,22 +54,6 @@ div.nsb-viewer {
     border-radius: var(--component-border-radius);
     box-shadow: 0 2px var(--component-border-radius) 2px #555;
 }
-div.nsb-viewer-toolbar {
-    margin: auto;
-    width: auto;
-    display: flex;
-    align-items: stretch;
-    flex-direction: row;
-    justify-content: space-between;
-}
-div.nsb-viewer-toolbar-close {
-    flex: 0;
-}
-div.nsb-viewer-toolbar-action {
-    align-items: stretch;
-    flex-direction: row;
-    justify-content: right;
-}
 iframe.nsb-viewer-content {
     display: block;
     border: none;
@@ -78,20 +62,4 @@ iframe.nsb-viewer-content {
     height: 76%;
     max-width: inherit;
     max-height: inherit;
-}
-
-/* Toast Message */
-div#nsb-toast {
-    margin: 0.8em auto auto;
-    padding: 1em;
-    width: 33%;
-    max-width: 33%;
-    min-width: 33%;
-    height: auto;
-    color: white;
-    border-radius: var(--component-border-radius);
-    background-color: rgba(30, 30, 30, 80%);
-    position: fixed;
-    top: 0;
-    left: 33%;
 }

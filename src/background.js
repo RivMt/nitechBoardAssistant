@@ -3,7 +3,7 @@ const actionInsertCss = "actionInsertCss"
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     switch (message.data) {
         case actionInsertCss:
-            insertCss(sender.tab.id, message.key)
+            insertCss(sender.tab.id, message.css)
             sendResponse({
                 "result": true
             })
@@ -14,11 +14,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     })
 })
 
-function insertCss(tabId) {
-    const css = [
-        "src/nsb-core.css",
-        "src/nsb-main.css"
-    ]
+function insertCss(tabId, css) {
     chrome.scripting.insertCSS({
         files: css,
         target: {

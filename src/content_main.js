@@ -2,17 +2,31 @@ const actionInsertCss = "actionInsertCss"
 
 window.onload = async function() {
     const isDetail = document.URL.includes("detail")
+    const openArticleInNewWindows = await getSetting("optionOpenArticleInNewWindow", defaultSettings.optionOpenArticleInNewWindow)
     includeMaterialSymbols()
-    insertCSS()
-    insertScript(document, "src/override-main.js")
     removeTableStyle(document)
     setTableHeader(document)
     setHighlightColumn()
     removeLinkStyle()
-    setToolbar()
-    setSearchBar()
-    setSearchResult()
-    createViewer()
+    if (!openArticleInNewWindows) {
+        insertScript(document, "src/override-main.js")
+        createViewer()
+    }
+    if (isDetail) {
+        document.body.prepend(createViewerToolbar(isDetail))
+        insertCSS([
+            "src/nsb-core.css",
+            "src/nsb-article.css"
+        ])
+    } else {
+        setToolbar()
+        setSearchBar()
+        setSearchResult()
+        insertCSS([
+            "src/nsb-core.css",
+            "src/nsb-main.css"
+        ])
+    }
     createToast()
 }
 
@@ -23,10 +37,11 @@ function includeMaterialSymbols() {
     document.querySelector("head").append(material)
 }
 
-function insertCSS() {
+function insertCSS(css) {
     chrome.runtime.sendMessage(
         {
-            "data": actionInsertCss
+            "data": actionInsertCss,
+            "css": css
         },
         function (response) {
             if (!response.result) {
@@ -97,37 +112,7 @@ function setSearchResult() {
 }
 
 function createViewer() {
-    const viewerClose = document.createElement("button")
-    viewerClose.classList.add("nsb-viewer-toolbar-close")
-    viewerClose.classList.add("icon-button")
-    viewerClose.append(createMaterialSymbol("close"))
-    viewerClose.onclick = closeIframe
-    const viewerPrint = document.createElement("button")
-    viewerPrint.classList.add("icon-button")
-    viewerPrint.append(createMaterialSymbol("print"))
-    viewerPrint.onclick = printIframe
-    const viewerCopy = document.createElement("button")
-    viewerCopy.classList.add("icon-button")
-    viewerCopy.append(createMaterialSymbol("content_copy"))
-    viewerCopy.onclick = copyIframeContent
-    const viewerUrl = document.createElement("button")
-    viewerUrl.classList.add("icon-button")
-    viewerUrl.append(createMaterialSymbol("link"))
-    viewerUrl.onclick = copyIframeSrc
-    const viewerFlag = document.createElement("button")
-    viewerFlag.classList.add("icon-button")
-    viewerFlag.append(createMaterialSymbol("star"))
-    viewerFlag.onclick = flagIframe
-    const viewerAction = document.createElement("div")
-    viewerAction.classList.add("nsb-viewer-toolbar-action")
-    viewerAction.append(viewerPrint)
-    viewerAction.append(viewerCopy)
-    viewerAction.append(viewerUrl)
-    viewerAction.append(viewerFlag)
-    const viewerToolbar = document.createElement("div")
-    viewerToolbar.classList.add("nsb-viewer-toolbar")
-    viewerToolbar.append(viewerClose)
-    viewerToolbar.append(viewerAction)
+    const viewerToolbar = createViewerToolbar(false)
     const viewerContent = document.createElement("iframe")
     viewerContent.classList.add("nsb-viewer-content")
     viewerContent.onload = onIframeLoad
@@ -142,4 +127,39 @@ function createViewer() {
     viewerBackground.append(viewer)
     const body = document.querySelector("body")
     body.append(viewerBackground)
+}
+
+function createViewerToolbar(isDetail) {
+    const viewerClose = document.createElement("button")
+    viewerClose.classList.add("nsb-viewer-toolbar-close")
+    viewerClose.classList.add("icon-button")
+    viewerClose.append(createMaterialSymbol("close"))
+    viewerClose.onclick = () => closeIframe(isDetail)
+    const viewerPrint = document.createElement("button")
+    viewerPrint.classList.add("icon-button")
+    viewerPrint.append(createMaterialSymbol("print"))
+    viewerPrint.onclick = () => printIframe(isDetail)
+    const viewerCopy = document.createElement("button")
+    viewerCopy.classList.add("icon-button")
+    viewerCopy.append(createMaterialSymbol("content_copy"))
+    viewerCopy.onclick = () => copyIframeContent(isDetail)
+    const viewerUrl = document.createElement("button")
+    viewerUrl.classList.add("icon-button")
+    viewerUrl.append(createMaterialSymbol("link"))
+    viewerUrl.onclick = () => copyIframeSrc(isDetail)
+    const viewerFlag = document.createElement("button")
+    viewerFlag.classList.add("icon-button")
+    viewerFlag.append(createMaterialSymbol("star"))
+    viewerFlag.onclick = () => flagIframe(isDetail)
+    const viewerAction = document.createElement("div")
+    viewerAction.classList.add("nsb-viewer-toolbar-action")
+    viewerAction.append(viewerPrint)
+    viewerAction.append(viewerCopy)
+    viewerAction.append(viewerUrl)
+    viewerAction.append(viewerFlag)
+    const viewerToolbar = document.createElement("div")
+    viewerToolbar.classList.add("nsb-viewer-toolbar")
+    viewerToolbar.append(viewerClose)
+    viewerToolbar.append(viewerAction)
+    return viewerToolbar
 }

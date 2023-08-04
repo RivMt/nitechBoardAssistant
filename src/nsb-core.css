@@ -53,6 +53,45 @@ td, th {
     font-size: 1em;
 }
 
+/* Viewer Toolbar */
+div.nsb-viewer-toolbar {
+    margin: auto;
+    width: auto;
+    display: flex;
+    align-items: stretch;
+    flex-direction: row;
+    justify-content: space-between;
+}
+div.nsb-viewer-toolbar-close {
+    flex: 0;
+}
+div.nsb-viewer-toolbar-action {
+    align-items: stretch;
+    flex-direction: row;
+    justify-content: right;
+}
+@media print {
+    div.nsb-viewer-toolbar {
+        display: none;
+    }
+}
+
+/* Toast Message */
+div#nsb-toast {
+    margin: 0.8em auto auto;
+    padding: 1em;
+    width: 33%;
+    max-width: 33%;
+    min-width: 33%;
+    height: auto;
+    color: white;
+    border-radius: var(--component-border-radius);
+    background-color: rgba(30, 30, 30, 80%);
+    position: fixed;
+    top: 0;
+    left: 33%;
+}
+
 /* Hyperlink */
 a {
     text-decoration: none;
