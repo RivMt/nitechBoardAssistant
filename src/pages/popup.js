@@ -1,17 +1,14 @@
-// On page start
-window.onload = function() {
+window.addEventListener("load", event => {
     // Edit version
     document.getElementById("version").innerText = chrome.runtime.getManifest().version
-    // Apply translation
-    applyTranslation()
-}
+    // Apply event
+    addOnClickEvent()
+})
 
-/**
- * Apply translations to element which has 'translate' class
- */
-function applyTranslation() {
-    const list = document.body.getElementsByClassName('translate')
-    for(let i=0; i < list.length; i++) {
-        list[i].innerText = chrome.i18n.getMessage(list[i].getAttribute('key'))
+function addOnClickEvent() {
+    // Checkbox
+    const checkBoxes = document.querySelectorAll("input[type='checkbox']")
+    for(let i=0; i < checkBoxes.length; i++) {
+        checkBoxes[i].onclick = () => onCheckboxValueChanged(checkBoxes[i].id)
     }
 }

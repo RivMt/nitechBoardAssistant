@@ -21,5 +21,9 @@
   "placeholderSearchBar": {
     "message": "検索",
     "description": "Placeholder for search bar"
+  },
+  "optionOpenArticleInNewWindow": {
+    "message": "新しいウィンドウで開く",
+    "description": "Option for open article in new window or not"
   }
 }

@@ -4,7 +4,10 @@
     <title>Popup</title>
     <link rel="stylesheet" href="../nsb-core.css"/>
     <link rel="stylesheet" href="popup.css"/>
+    <script type="text/javascript" src="../translate.js"></script>
+    <script type="text/javascript" src="../settings.js"></script>
     <script type="text/javascript" src="popup.js"></script>
+    <script type="text/javascript" src="options.js"></script>
 </head>
 <body>
     <header>
@@ -14,8 +17,16 @@
         <h1 class="translate" key="extensionName"></h1>
         <p class="version">Version <span id="version">UNKNOWN</span></p>
     </header>
-    <hr/>
     <p class="translate" key="extensionDesc"></p>
+    <hr/>
+    <div class="options">
+        <div class="checkboxgroup">
+            <label>
+                <input type="checkbox" id="optionOpenArticleInNewWindow"/>
+                <span class="translate" key="optionOpenArticleInNewWindow">OpenArticleInNewWindow</span>
+            </label>
+        </div>
+    </div>
     <hr/>
     <footer>
         <p class="translate notice" key="messageLegalNotice">免責事項</p>
