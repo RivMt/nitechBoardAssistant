@@ -63,3 +63,7 @@ a.iconButton:active {
     display: block;
     margin: auto;
 }
+
+.options {
+    padding: 0.5em;
+}
