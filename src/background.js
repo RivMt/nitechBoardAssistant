@@ -14,6 +14,12 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     })
 })
 
+/**
+ * Insert css file to tab specified by tabId
+ * @param {number} tabId
+ * @param {string[]} css
+ * @return void
+ */
 function insertCss(tabId, css) {
     chrome.scripting.insertCSS({
         files: css,

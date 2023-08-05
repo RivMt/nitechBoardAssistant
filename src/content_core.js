@@ -1,13 +1,32 @@
+/**
+ * Uri of material symbols style file
+ * @type {string}
+ */
 const materialSymbols = "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
 
+/**
+ * Class name of material symbols
+ * @type {string}
+ */
 const classMaterialSymbols = "material-symbols-outlined"
 
+/**
+ * Insert JavaScript file to document
+ * @param {Document} document
+ * @param {string} file
+ * @return void
+ */
 function insertScript(document, file) {
     const script = document.createElement("script")
     script.src = chrome.runtime.getURL(file)
     document.head.append(script)
 }
 
+/**
+ * Remove table style given by tag attributes.
+ * @param {Document} document
+ * @return void
+ */
 function removeTableStyle(document) {
     const table = document.querySelector("table")
     if (table !== null) {
@@ -21,6 +40,11 @@ function removeTableStyle(document) {
     }
 }
 
+/**
+ * Set first row of table as header
+ * @param {Document} document
+ * @return void
+ */
 function setTableHeader(document) {
     const head = document.querySelector("tr")
     if (head === null) {
@@ -33,6 +57,11 @@ function setTableHeader(document) {
     }
 }
 
+/**
+ * Create material symbol icon
+ * @param {string} code Code of material symbol
+ * @returns {HTMLSpanElement}
+ */
 function createMaterialSymbol(code) {
     const symbol = document.createElement("span")
     symbol.classList.add(classMaterialSymbols)
@@ -40,6 +69,10 @@ function createMaterialSymbol(code) {
     return symbol
 }
 
+/**
+ * Create toast component to current document
+ * @return void
+ */
 function createToast() {
     const toast = document.createElement("div")
     toast.setAttribute("id", "nsb-toast")
@@ -47,6 +80,11 @@ function createToast() {
     document.body.append(toast)
 }
 
+/**
+ * Show toast message to current document
+ * @param {string} message
+ * @return void
+ */
 function showToast(message) {
     const toast = document.getElementById("nsb-toast")
     toast.innerText = message

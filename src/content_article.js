@@ -1,9 +1,16 @@
-
-
+/**
+ * Get iframe tag from document
+ * @returns {HTMLIFrameElement}
+ */
 function getIframe() {
     return document.querySelector("iframe#nsb-viewer-content")
 }
 
+/**
+ * Set iframe src attribute
+ * @param {string} uri
+ * @return void
+ */
 function setIframeSrc(uri) {
     const iframe = getIframe()
     if (iframe === null) {
@@ -12,6 +19,10 @@ function setIframeSrc(uri) {
     iframe.setAttribute("src", uri)
 }
 
+/**
+ * Set article style in iframe
+ * @return void
+ */
 function setIframeArticleStyle() {
     const iframe = getIframe()
     if (iframe === null) {
@@ -29,6 +40,10 @@ function setIframeArticleStyle() {
     article.classList.add("nsb-viewer-content-article")
 }
 
+/**
+ * Set flag button in iframe
+ * @return void
+ */
 function setIframeArticleFlagButton() {
     const iframe = getIframe()
     if (iframe === null) {
@@ -50,6 +65,16 @@ function setIframeArticleFlagButton() {
     }
 }
 
+/**
+ * Triggers on iframe src changes
+ * If url is empty or null, hide article viewer.
+ * If url is not empty or null, execute followings
+ * 1. Display article viewer
+ * 2. Insert CSS files
+ * 3. Insert JavaScript file to override webpage functions
+ * 4. Set title attribute of iframe as article title
+ * @returns {Promise<void>}
+ */
 async function onIframeLoad() {
     const viewer = document.querySelector(".nsb-viewer-background")
     if (viewer === null) {
@@ -85,6 +110,12 @@ async function onIframeLoad() {
     }
 }
 
+/**
+ * Close iframe
+ * If isDetail is true, close current window. But it is false, set iframe src as empty and submit form.
+ * @param {boolean} isDetail
+ * @return void
+ */
 function closeIframe(isDetail) {
     if (isDetail) {
         window.close()
@@ -95,6 +126,12 @@ function closeIframe(isDetail) {
     form.submit()
 }
 
+/**
+ * Print current article
+ * If isDetail is true, print current window. Or not, print iframe instead.
+ * @param {boolean} isDetail
+ * @return void
+ */
 function printIframe(isDetail) {
     if (isDetail) {
         window.print()
@@ -107,6 +144,11 @@ function printIframe(isDetail) {
     iframe.contentWindow.print()
 }
 
+/**
+ * Toggle current article as flagged or unflagged.
+ * @param {boolean} isDetail
+ * @return void
+ */
 function flagIframe(isDetail) {
     let w = window
     if (!isDetail) {
@@ -122,6 +164,11 @@ function flagIframe(isDetail) {
     setTimeout(closeIframe, 100)
 }
 
+/**
+ * Copy content of current article
+ * @param {boolean} isDetail
+ * @return void
+ */
 function copyIframeContent(isDetail) {
     let content = null
     if (isDetail) {
@@ -145,6 +192,11 @@ function copyIframeContent(isDetail) {
     showToast(message)
 }
 
+/**
+ * Copy uri of current article
+ * @param {boolean} isDetail
+ * @return void
+ */
 function copyIframeSrc(isDetail) {
     let uri = ""
     if (isDetail) {

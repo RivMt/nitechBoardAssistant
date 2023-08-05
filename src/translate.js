@@ -1,10 +1,15 @@
+/**
+ * @file Translate current webpage
+ */
+
 window.addEventListener("load", event => {
     // Apply translation
     applyTranslation()
 })
 
 /**
- * Apply translations to element which has 'translate' class
+ * Apply translations to element which is 'translate' class
+ * @return void
  */
 function applyTranslation() {
     const list = document.body.getElementsByClassName('translate')

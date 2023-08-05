@@ -30,6 +30,10 @@ window.addEventListener("load", async function() {
     createToast()
 })
 
+/**
+ * Insert material symbol CSS
+ * @return void
+ */
 function includeMaterialSymbols() {
     const material = document.createElement("link")
     material.setAttribute("rel", "stylesheet")
@@ -37,6 +41,11 @@ function includeMaterialSymbols() {
     document.querySelector("head").append(material)
 }
 
+/**
+ * Insert CSS to current tab
+ * @param {string[]} css
+ * @return void
+ */
 function insertCSS(css) {
     chrome.runtime.sendMessage(
         {
@@ -51,6 +60,10 @@ function insertCSS(css) {
     )
 }
 
+/**
+ * Highlight flagged article
+ * @return void
+ */
 function setHighlightColumn() {
     const onlyUnread = document.querySelector("div").querySelector("input").checked
     const columns = document.querySelectorAll("tr")
@@ -70,6 +83,10 @@ function setHighlightColumn() {
     }
 }
 
+/**
+ * Remove style attribute in a tag
+ * @return void
+ */
 function removeLinkStyle() {
     const links = document.querySelectorAll("a, td, span")
     for(let i=0; i < links.length; i++) {
@@ -77,12 +94,20 @@ function removeLinkStyle() {
     }
 }
 
+/**
+ * Set toolbar style
+ * @return void
+ */
 function setToolbar() {
     const toolbar = document.querySelector("div")
     toolbar.classList.add("nsb-toolbar")
     toolbar.removeAttribute("style")
 }
 
+/**
+ * Set search bar style
+ * @return void
+ */
 function setSearchBar() {
     const searchBar = document.querySelectorAll("div")[1]
     searchBar.classList.add("nsb-toolbar")
@@ -102,6 +127,10 @@ function setSearchBar() {
     searchInputs[2].setAttribute("style", "display:none;")
 }
 
+/**
+ * Set search result style
+ * @return void
+ */
 function setSearchResult() {
     const divs = document.querySelectorAll("div")
     if (divs.length < 3) {
@@ -111,6 +140,10 @@ function setSearchResult() {
     result.classList.add("nsb-search-result")
 }
 
+/**
+ * Create popup article viewer
+ * @return void
+ */
 function createViewer() {
     const viewerToolbar = createViewerToolbar(false)
     const viewerContent = document.createElement("iframe")
@@ -129,6 +162,11 @@ function createViewer() {
     body.append(viewerBackground)
 }
 
+/**
+ * Create viewer toolbar
+ * @param {boolean} isDetail
+ * @returns {HTMLDivElement}
+ */
 function createViewerToolbar(isDetail) {
     const viewerClose = document.createElement("button")
     viewerClose.classList.add("nsb-viewer-toolbar-close")
