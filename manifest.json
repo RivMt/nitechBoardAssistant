@@ -34,6 +34,7 @@
         "http://rpxkeijiban3.ict.nitech.ac.jp/*"
       ],
       "js": [
+        "src/constants.js",
         "src/content_core.js",
         "src/content_main.js",
         "src/content_article.js",

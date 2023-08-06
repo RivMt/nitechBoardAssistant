@@ -1,5 +1,3 @@
-const actionInsertCss = "actionInsertCss"
-
 window.addEventListener("load", async function() {
     const isDetail = document.URL.includes("detail")
     const openArticleInNewWindows = await getSetting("optionOpenArticleInNewWindow", defaultSettings.optionOpenArticleInNewWindow)
