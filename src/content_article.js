@@ -53,14 +53,16 @@ function setViewerFlagButton() {
     if (inputs.length < 7) {
         return
     }
-    const flag = inputs[6].value.includes("非")
+    const flagged = inputs[6].value.includes("非")
     const buttons = document.querySelectorAll("button")
     if (buttons.length < 5) {
         return
     }
-    if (flag) {
+    if (flagged) {
+        buttons[4].querySelector("span").innerText = "star"
         buttons[4].classList.add("nsb-flag")
     } else {
+        buttons[4].querySelector("span").innerText = "star_outline"
         buttons[4].classList.remove("nsb-flag")
     }
 }

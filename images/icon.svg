@@ -25,7 +25,7 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="0.5946522"
-     inkscape:cx="-268.22401"
+     inkscape:cx="-357.35174"
      inkscape:cy="171.52884"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
@@ -36,7 +36,16 @@
      id="defs2" /><g
      inkscape:label="icon"
      inkscape:groupmode="layer"
-     id="layer1"><g
+     id="layer1"><rect
+       style="fill:none;stroke-width:1.05833;stroke-linejoin:bevel;stroke:none"
+       id="rect869"
+       width="135.46666"
+       height="135.46666"
+       x="0"
+       y="0"
+       rx="12.7"
+       ry="12.7"
+       inkscape:label="TransparentBackground" /><g
        style="fill:#000000"
        id="g4770"
        transform="matrix(4.0475841,0,0,4.0475841,18.314118,20.430786)"><g

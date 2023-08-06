@@ -2,13 +2,13 @@
  * Uri of material symbols style file
  * @type {string}
  */
-const materialSymbols = "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+const materialSymbols = "https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
 
 /**
  * Class name of material symbols
  * @type {string}
  */
-const classMaterialSymbols = "material-symbols-outlined"
+const classMaterialSymbols = "material-icons-outlined"
 
 window.addEventListener("load", async () => {
     includeMaterialSymbols()

@@ -85,7 +85,7 @@ function setSearchBar() {
     searchInputs[0].setAttribute("placeholder", chrome.i18n.getMessage("placeholderSearchBar"))
     searchInputs[1].innerHTML = ""
     searchInputs[1].setAttribute("value", "search")
-    searchInputs[1].classList.add("material-symbols-outlined")
+    searchInputs[1].classList.add(classMaterialSymbols)
     searchInputs[1].classList.add("icon-button")
     searchInputs[1].removeAttribute("style")
     searchInputs[2].setAttribute("style", "display:none;")
