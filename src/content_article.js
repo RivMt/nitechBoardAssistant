@@ -2,7 +2,7 @@
  * Get iframe tag from document
  * @returns {HTMLIFrameElement}
  */
-function getIframe() {
+function getViewer() {
     return document.querySelector("iframe#nsb-viewer-content")
 }
 
@@ -11,8 +11,8 @@ function getIframe() {
  * @param {string} uri
  * @return void
  */
-function setIframeSrc(uri) {
-    const iframe = getIframe()
+function setViewerUri(uri) {
+    const iframe = getViewer()
     if (iframe === null) {
         return
     }
@@ -23,8 +23,8 @@ function setIframeSrc(uri) {
  * Set article style in iframe
  * @return void
  */
-function setIframeArticleStyle() {
-    const iframe = getIframe()
+function setViewerStyle() {
+    const iframe = getViewer()
     if (iframe === null) {
         return
     }
@@ -44,8 +44,8 @@ function setIframeArticleStyle() {
  * Set flag button in iframe
  * @return void
  */
-function setIframeArticleFlagButton() {
-    const iframe = getIframe()
+function setViewerFlagButton() {
+    const iframe = getViewer()
     if (iframe === null) {
         return
     }
@@ -75,12 +75,12 @@ function setIframeArticleFlagButton() {
  * 4. Set title attribute of iframe as article title
  * @returns {Promise<void>}
  */
-async function onIframeLoad() {
+async function onViewerLoad() {
     const viewer = document.querySelector(".nsb-viewer-background")
     if (viewer === null) {
         return
     }
-    const iframe = getIframe()
+    const iframe = getViewer()
     if (iframe === null) {
         return
     }
@@ -98,8 +98,8 @@ async function onIframeLoad() {
         insertScript(iframe.contentWindow.document, "src/override-article.js")
         removeTableStyle(iframe.contentWindow.document)
         setTableHeader(iframe.contentWindow.document)
-        setIframeArticleStyle()
-        setIframeArticleFlagButton()
+        setViewerStyle()
+        setViewerFlagButton()
         // Set title
         const title = iframe.contentWindow.document.getElementById("nsb-viewer-content-table").querySelectorAll("td")[1].innerText
         iframe.setAttribute("title", title)
@@ -116,12 +116,12 @@ async function onIframeLoad() {
  * @param {boolean} isDetail
  * @return void
  */
-function closeIframe(isDetail) {
+function closeArticle(isDetail) {
     if (isDetail) {
         window.close()
         return
     }
-    setIframeSrc("")
+    setViewerUri("")
     const form = document.querySelector("form")
     form.submit()
 }
@@ -132,12 +132,12 @@ function closeIframe(isDetail) {
  * @param {boolean} isDetail
  * @return void
  */
-function printIframe(isDetail) {
+function printArticle(isDetail) {
     if (isDetail) {
         window.print()
         return
     }
-    const iframe = getIframe()
+    const iframe = getViewer()
     if (iframe === null) {
         return
     }
@@ -149,10 +149,10 @@ function printIframe(isDetail) {
  * @param {boolean} isDetail
  * @return void
  */
-function flagIframe(isDetail) {
+function flagArticle(isDetail) {
     let w = window
     if (!isDetail) {
-        const iframe = getIframe()
+        const iframe = getViewer()
         if (iframe === null) {
             return
         }
@@ -161,7 +161,7 @@ function flagIframe(isDetail) {
     const toolbar = w.document.querySelector("#print_display")
     const flag = toolbar.querySelectorAll("input")[3]
     flag.click()
-    setTimeout(closeIframe, 100)
+    setTimeout(closeArticle, 100)
 }
 
 /**
@@ -169,7 +169,7 @@ function flagIframe(isDetail) {
  * @param {boolean} isDetail
  * @return void
  */
-function copyIframeContent(isDetail) {
+function copyArticleContent(isDetail) {
     let content = null
     if (isDetail) {
         const trs = document.querySelectorAll("tr")
@@ -178,7 +178,7 @@ function copyIframeContent(isDetail) {
         }
         content = trs[4]
     } else {
-        const iframe = getIframe()
+        const iframe = getViewer()
         if (iframe === null) {
             return
         }
@@ -197,12 +197,12 @@ function copyIframeContent(isDetail) {
  * @param {boolean} isDetail
  * @return void
  */
-function copyIframeSrc(isDetail) {
+function copyArticleUri(isDetail) {
     let uri = ""
     if (isDetail) {
         uri = window.location
     } else {
-        const iframe = getIframe()
+        const iframe = getViewer()
         if (iframe === null) {
             return
         }

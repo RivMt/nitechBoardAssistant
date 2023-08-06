@@ -1,11 +1,7 @@
 window.addEventListener("load", async function() {
     const isDetail = document.URL.includes("detail")
     const openArticleInNewWindows = await getSetting("optionOpenArticleInNewWindow", defaultSettings.optionOpenArticleInNewWindow)
-    includeMaterialSymbols()
-    removeTableStyle(document)
-    setTableHeader(document)
     setHighlightColumn()
-    removeLinkStyle()
     if (!openArticleInNewWindows) {
         insertScript(document, "src/override-main.js")
         createViewer()
@@ -27,36 +23,6 @@ window.addEventListener("load", async function() {
     }
     createToast()
 })
-
-/**
- * Insert material symbol CSS
- * @return void
- */
-function includeMaterialSymbols() {
-    const material = document.createElement("link")
-    material.setAttribute("rel", "stylesheet")
-    material.setAttribute("href", materialSymbols)
-    document.querySelector("head").append(material)
-}
-
-/**
- * Insert CSS to current tab
- * @param {string[]} css
- * @return void
- */
-function insertCSS(css) {
-    chrome.runtime.sendMessage(
-        {
-            "data": actionInsertCss,
-            "css": css
-        },
-        function (response) {
-            if (!response.result) {
-                console.error(response)
-            }
-        }
-    )
-}
 
 /**
  * Highlight flagged article
@@ -85,7 +51,7 @@ function setHighlightColumn() {
  * Remove style attribute in a tag
  * @return void
  */
-function removeLinkStyle() {
+function removeStyle() {
     const links = document.querySelectorAll("a, td, span")
     for(let i=0; i < links.length; i++) {
         links[i].removeAttribute("style")
@@ -140,53 +106,56 @@ function setSearchResult() {
 
 /**
  * Create popup article viewer
+ * @param {HTMLElement | undefined} parent Parent element to viewer inserted. If it is null insert viewer to body
  * @return void
  */
-function createViewer() {
-    const viewerToolbar = createViewerToolbar(false)
+function createViewer(parent) {
     const viewerContent = document.createElement("iframe")
     viewerContent.classList.add("nsb-viewer-content")
-    viewerContent.onload = onIframeLoad
+    viewerContent.onload = onViewerLoad
     viewerContent.setAttribute("name", "nsb-viewer-content")
     viewerContent.setAttribute("id", "nsb-viewer-content")
     const viewer = document.createElement("div")
     viewer.classList.add("nsb-viewer")
-    viewer.append(viewerToolbar)
+    createViewerToolbar(viewer, false)
     viewer.append(viewerContent)
     const viewerBackground = document.createElement("div")
     viewerBackground.classList.add("nsb-viewer-background")
     viewerBackground.append(viewer)
-    const body = document.querySelector("body")
-    body.append(viewerBackground)
+    if (parent === undefined) {
+        parent = document.querySelector("body")
+    }
+    parent.append(viewerBackground)
 }
 
 /**
  * Create viewer toolbar
+ * @param {HTMLElement | undefined} parent Parent element to viewer inserted. If it is null insert viewer to body
  * @param {boolean} isDetail
  * @returns {HTMLDivElement}
  */
-function createViewerToolbar(isDetail) {
+function createViewerToolbar(parent, isDetail) {
     const viewerClose = document.createElement("button")
     viewerClose.classList.add("nsb-viewer-toolbar-close")
     viewerClose.classList.add("icon-button")
     viewerClose.append(createMaterialSymbol("close"))
-    viewerClose.onclick = () => closeIframe(isDetail)
+    viewerClose.onclick = () => closeArticle(isDetail)
     const viewerPrint = document.createElement("button")
     viewerPrint.classList.add("icon-button")
     viewerPrint.append(createMaterialSymbol("print"))
-    viewerPrint.onclick = () => printIframe(isDetail)
+    viewerPrint.onclick = () => printArticle(isDetail)
     const viewerCopy = document.createElement("button")
     viewerCopy.classList.add("icon-button")
     viewerCopy.append(createMaterialSymbol("content_copy"))
-    viewerCopy.onclick = () => copyIframeContent(isDetail)
+    viewerCopy.onclick = () => copyArticleContent(isDetail)
     const viewerUrl = document.createElement("button")
     viewerUrl.classList.add("icon-button")
     viewerUrl.append(createMaterialSymbol("link"))
-    viewerUrl.onclick = () => copyIframeSrc(isDetail)
+    viewerUrl.onclick = () => copyArticleUri(isDetail)
     const viewerFlag = document.createElement("button")
     viewerFlag.classList.add("icon-button")
     viewerFlag.append(createMaterialSymbol("star"))
-    viewerFlag.onclick = () => flagIframe(isDetail)
+    viewerFlag.onclick = () => flagArticle(isDetail)
     const viewerAction = document.createElement("div")
     viewerAction.classList.add("nsb-viewer-toolbar-action")
     viewerAction.append(viewerPrint)
@@ -197,5 +166,8 @@ function createViewerToolbar(isDetail) {
     viewerToolbar.classList.add("nsb-viewer-toolbar")
     viewerToolbar.append(viewerClose)
     viewerToolbar.append(viewerAction)
-    return viewerToolbar
+    if (parent === undefined) {
+        parent = document.querySelector("body")
+    }
+    parent.append(viewerToolbar)
 }

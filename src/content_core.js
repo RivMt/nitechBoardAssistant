@@ -10,6 +10,44 @@ const materialSymbols = "https://fonts.googleapis.com/css2?family=Material+Symbo
  */
 const classMaterialSymbols = "material-symbols-outlined"
 
+window.addEventListener("load", async () => {
+    includeMaterialSymbols()
+    removeTableStyle(document)
+    setTableHeader(document)
+    removeStyle()
+})
+
+/**
+ * Insert material symbol CSS
+ * @return void
+ */
+function includeMaterialSymbols() {
+    const material = document.createElement("link")
+    material.setAttribute("rel", "stylesheet")
+    material.setAttribute("href", materialSymbols)
+    document.querySelector("head").append(material)
+}
+
+/**
+ * Insert CSS to current tab
+ * This method sends message to service worker to insert CSS.
+ * @param {string[]} css List of CSS files
+ * @return void
+ */
+function insertCSS(css) {
+    chrome.runtime.sendMessage(
+        {
+            "data": actionInsertCss,
+            "css": css
+        },
+        function (response) {
+            if (!response.result) {
+                console.error(response)
+            }
+        }
+    )
+}
+
 /**
  * Insert JavaScript file to document
  * @param {Document} document
