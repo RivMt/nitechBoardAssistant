@@ -4,6 +4,8 @@
 
 名古屋工業大学の学生掲示板がもっと便利に使える拡張機能です。
 
+[![Available in the the Chrome Web Store](/screenshots/chrome-webstore.png)](https://chrome.google.com/webstore/detail/gobaapcdhmlahedeknccmkmekbmkpejf)
+
 ## デザイン
 
 ![画面](screenshots/board.png)
@@ -23,4 +25,4 @@
 
  - 掲示板のウィンドウでそのまま読める
  - 読みやすい大きさの文字
- - 直感的に意味が伝わるボタン
+ - 直観的に意味が伝わるボタン
