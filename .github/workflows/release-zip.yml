@@ -13,11 +13,11 @@ jobs:
       uses: thedoctor0/zip-release@0.7.1
       with:
         type: 'zip'
-        filename: '名工大学生掲示板アシスタント-${{ env.RELEASE_VERSION }}.zip'
-        exclusions: 'screenshots .gitignore'
+        filename: 'nba-${{ env.RELEASE_VERSION }}.zip'
+        exclusions: './screenshots ./.gitignore ./.git ./.github'
     - name: Upload Release
       uses: ncipollo/release-action@v1.12.0
       with:
-        artifacts: "名工大学生掲示板アシスタント-${{ env.RELEASE_VERSION }}.zip"
+        artifacts: "nba-${{ env.RELEASE_VERSION }}.zip"
         token: ${{ secrets.RELEASE_TOKEN }}
         allowUpdates: true
