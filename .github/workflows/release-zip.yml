@@ -1,0 +1,17 @@
+name: Create Archive
+on:
+  push:
+    tags: [ "v*.*.*" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Get version name
+      run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+    - name: Archive Release
+      uses: thedoctor0/zip-release@0.7.1
+      with:
+        type: 'zip'
+        filename: '名工大学生掲示板アシスタント-${{ env.RELEASE_VERSION }}.zip'
+        exclusions: 'screenshots .gitignore'
