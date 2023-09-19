@@ -20,3 +20,4 @@ jobs:
       with:
         artifacts: "名工大学生掲示板アシスタント-${{ env.RELEASE_VERSION }}.zip"
         token: ${{ secrets.RELEASE_TOKEN }}
+        allowUpdates: true
