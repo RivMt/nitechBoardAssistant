@@ -4,10 +4,10 @@ window.addEventListener("load", async function() {
     setHighlightColumn()
     if (!openArticleInNewWindows) {
         insertScript(document, "src/override-main.js")
-        createViewer()
+        document.body.append(viewer())
     }
     if (isDetail) {
-        document.body.prepend(createViewerToolbar(isDetail))
+        document.body.prepend(viewerToolbar(isDetail))
         insertCSS([
             "src/nsb-core.css",
             "src/nsb-article.css"
@@ -106,10 +106,9 @@ function setSearchResult() {
 
 /**
  * Create popup article viewer
- * @param {HTMLElement | undefined} parent Parent element to viewer inserted. If it is null insert viewer to body
- * @return void
+ * @returns {HTMLDivElement}
  */
-function createViewer(parent) {
+function viewer() {
     const viewerContent = document.createElement("iframe")
     viewerContent.classList.add("nsb-viewer-content")
     viewerContent.onload = onViewerLoad
@@ -117,24 +116,20 @@ function createViewer(parent) {
     viewerContent.setAttribute("id", "nsb-viewer-content")
     const viewer = document.createElement("div")
     viewer.classList.add("nsb-viewer")
-    createViewerToolbar(viewer, false)
+    viewer.append(viewerToolbar(false))
     viewer.append(viewerContent)
     const viewerBackground = document.createElement("div")
     viewerBackground.classList.add("nsb-viewer-background")
     viewerBackground.append(viewer)
-    if (parent === undefined) {
-        parent = document.querySelector("body")
-    }
-    parent.append(viewerBackground)
+    return viewerBackground
 }
 
 /**
  * Create viewer toolbar
- * @param {HTMLElement | undefined} parent Parent element to viewer inserted. If it is null insert viewer to body
  * @param {boolean} isDetail
  * @returns {HTMLDivElement}
  */
-function createViewerToolbar(parent, isDetail) {
+function viewerToolbar(isDetail) {
     const viewerClose = document.createElement("button")
     viewerClose.setAttribute("type", "button")
     viewerClose.classList.add("nsb-viewer-toolbar-close")
@@ -171,8 +166,5 @@ function createViewerToolbar(parent, isDetail) {
     viewerToolbar.classList.add("nsb-viewer-toolbar")
     viewerToolbar.append(viewerClose)
     viewerToolbar.append(viewerAction)
-    if (parent === undefined) {
-        parent = document.querySelector("body")
-    }
-    parent.append(viewerToolbar)
+    return viewerToolbar
 }
